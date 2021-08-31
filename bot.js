@@ -266,6 +266,17 @@ bot.on('message', function (user, userID, channelID, message, e) {
                 });
 
                 break;
+
+            case 'source':
+
+                var msg = "Source code available at: https://github.com/Archaversine/ThrawnBot";
+
+                bot.sendMessage({
+                    to: channelID,
+                    message: msg
+                });
+
+                break;
             
             default:
                 fillerResponse(channelID);
