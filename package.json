@@ -1,0 +1,11 @@
+{
+    "name": "Grand Admiral Thrawn",
+    "version": "1.0.0",
+    "description": "Grand Admiral",
+    "main": "bot.js",
+    "author": "Super Admiral",
+    "dependencies": {
+        "discord.io": "github:woor/discord.io#gateway_v6",
+        "winston": "^3.3.3"
+    }
+}
