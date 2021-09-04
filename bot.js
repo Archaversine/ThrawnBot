@@ -7,6 +7,7 @@ var auth = require('./auth.json');
 // Custom imports
 var credentials = require('./credentials.json');
 var dialogue = require('./dialogue.json');
+var utils = require('./utils')
 
 // Constants
 const COMMAND_PREFIX = "thrawn";
@@ -400,7 +401,15 @@ function randomArrayElement(array)
 
 function isCommander(id)
 {
-    return id == credentials.commander;
+    for (var i = 0; i < credentials.commanders.length; i++)
+    {
+        if (id == credentials.commanders[i])
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 function isAuthorized(argument, id)
