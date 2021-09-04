@@ -50,12 +50,9 @@ bot.on('ready', function (e) {
 });
 
 bot.on('message', function (user, userID, channelID, message, e) {
-    // Bot needs to know if it will execute a command
-    // It will listen for messages that start with `!`
 
     var args = message.split(' ');
 
-    //if (message.startsWith(COMMAND_PREFIX))
     if (args[0] == COMMAND_PREFIX)
     {
         var cmd = args[1];
@@ -68,10 +65,6 @@ bot.on('message', function (user, userID, channelID, message, e) {
         //     channelID: channelID,
         //     messageID: e.d.id
         // });
-
-        // console.log(e);
-        
-        // COMMANDS
         
         switch (cmd)
         {
@@ -101,7 +94,6 @@ bot.on('message', function (user, userID, channelID, message, e) {
             
             case 'addlistener':
                 
-                // if (args[0] == LISTENER_PASSWORD)
                 if (isAuthorized(args[0], userID))
                 {
                     listeners.push(channelID);
@@ -205,7 +197,6 @@ bot.on('message', function (user, userID, channelID, message, e) {
 
             case 'repeat':
 
-                // if (args[0] == LISTENER_PASSWORD)
                 if (isAuthorized(args[0], userID))
                 {
                     // listeners.push(channelID);
@@ -229,7 +220,6 @@ bot.on('message', function (user, userID, channelID, message, e) {
                 {
                     fillerResponse(channelID);
                 }
-                // else if (args[0] == LISTENER_PASSWORD)
                 else if (isAuthorized(args[0], userID))
                 {
                     repeaters = [];
@@ -349,19 +339,6 @@ function broadcast(msg)
     {
         return;
     }
-
-    // var msg = "```\n";
-    // msg += "MESSAGE INTERCEPTION\n";
-    // msg += "========================\n";
-    // msg += "Username   : " + e.d.author.username + "#" + e.d.author.discriminator + "\n";
-    // msg += "Time       : " + e.d.timestamp + "\n";
-    // msg += "User ID    : " + e.d.author.id + "\n";
-    // msg += "Channel ID : " + e.d.channel_id + "\n";
-    // msg += "Guid ID    : " + e.d.guild_id + "\n";
-    // msg += "-------------------------------\n";
-    // msg += "Contents: " + e.d.content + "\n";
-    // msg += "-------------------------------\n";
-    // msg += "```";
 
     for (var i = 0; i < listeners.length; i++)
     {
