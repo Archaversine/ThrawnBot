@@ -21,6 +21,8 @@ var listeners = [];
 var repeaters = [];
 var storedChannelIDs = [];
 
+var filter = null;
+
 listeners.push(credentials.report_to);
 
 // Configure logger settings
@@ -62,13 +64,12 @@ bot.on('message', function (user, userID, channelID, message, e) {
         
         args = args.splice(2);
 
-        // How to delete message
         // bot.deleteMessage({
         //     channelID: channelID,
         //     messageID: e.d.id
         // });
 
-        console.log(e);
+        // console.log(e);
         
         // COMMANDS
         
@@ -267,6 +268,21 @@ bot.on('message', function (user, userID, channelID, message, e) {
 
                 break;
 
+            case 'filter':
+
+                var msg;
+
+                if (isAuthorized(args[1], userID))
+                {
+                    filter = args[0];
+                }
+                else
+                {
+                    fillerResponse(channelID);
+                }
+
+                break;
+
             case 'source':
 
                 var msg = "Source code available at: https://github.com/Archaversine/ThrawnBot";
@@ -289,12 +305,14 @@ bot.on('message', function (user, userID, channelID, message, e) {
             broadcast(msg);
         }
     }
-    else
+    else if (userID != credentials.botID)
     {
         var msg_debug = "Intercepted message from " + user + ": " + message;
 
+        logger.info(msg_debug);
+        
         var msg = "```\n";
-        msg += "MESSAGE INTERCEPTION\n";
+        msg += "MESSAGE REPORT\n";
         msg += "========================\n";
         msg += "Username   : " + e.d.author.username + "#" + e.d.author.discriminator + "\n";
         msg += "Time       : " + e.d.timestamp + "\n";
@@ -305,10 +323,8 @@ bot.on('message', function (user, userID, channelID, message, e) {
         msg += "Contents: " + e.d.content + "\n";
         msg += "-------------------------------\n";
         msg += "```";
-
-        logger.info(msg_debug);
         
-        if (!isListener(channelID))
+        if (!isListener(channelID) && (filter == channelID || !hasFilter()))
         {
             broadcast(msg);
         }
@@ -413,4 +429,9 @@ function isCommander(id)
 function isAuthorized(argument, id)
 {
     return (argument == LISTENER_PASSWORD) || isCommander(id);
+}
+
+function hasFilter()
+{
+    return filter != null;
 }
