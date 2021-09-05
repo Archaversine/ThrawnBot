@@ -54,7 +54,7 @@ bot.on('message', function (user, userID, channelID, message, e) {
 
     var args = message.split(' ');
 
-    if (args[0] == COMMAND_PREFIX)
+    if (args[0].toLowerCase() == COMMAND_PREFIX)
     {
         var cmd = args[1];
         
